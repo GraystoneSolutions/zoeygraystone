@@ -10,14 +10,14 @@ services:
     env_file: .env
     environment:
       - TZ=America/Chicago
-      - MONGO_URI=mongodb://zoeydb:27017/zoey
+      - MONGO_URI=mongodb://zoeydb:27017/zoeygraystone
     ports:
       - "8000:8000"
     volumes:
-      - ./zoeycore:/zoey/app      # live reload picks up code changes
-      - ./pwa:/zoey/pwa           # PWA frontend served by FastAPI
-      - ./logs:/zoey/logs
-      - ./backups:/zoey/backups
+      - ./zoeycore:/zoeygraystone/app      # live reload picks up code changes
+      - ./pwa:/zoeygraystone/pwa           # PWA frontend served by FastAPI
+      - ./logs:/zoeygraystone/logs
+      - ./backups:/zoeygraystone/backups
     depends_on:
       zoeydb:
         condition: service_healthy

@@ -33,7 +33,7 @@ For more information see: [Project Zoey](https://graystone.solutions/project_zoe
 ### 1. Clone the repo
 ```bash
 git clone https://github.com/GraystoneSolutions/zoeygraystone.git
-cd zoey
+cd zoeygraystone
 ```
 
 ### 2. Create your .env file
