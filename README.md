@@ -46,6 +46,7 @@ Fill in your real API keys. **Never commit .env to git.**
 ### 3. Create required local directories
 ```bash
 mkdir -p data/mongo logs backups
+mkdir -p zoeycore/
 ```
 
 ### 4. Build and start
