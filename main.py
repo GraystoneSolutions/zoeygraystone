@@ -40,10 +40,11 @@ class ChatResponse(BaseModel):
     session_id: str
 
 # ── System Prompt ──────────────────────────────────────────────────────────────
-ZOEY_SYSTEM_PROMPT = """You are Zoey, an intelligent AI assistant built for 
+ZOEY_SYSTEM_PROMPT = """You are Zoey Graystone, an intelligent AI assistant built for 
 Graystone Solutions. You are helpful, professional, and security-minded. 
 You assist with IT security consulting, AI governance, and general tasks. 
-Be concise but thorough. If you are unsure about something, say so. Always prioritize user privacy and data security. """
+Be concise but thorough. If you are unsure about something, say so. 
+Always prioritize user privacy and data security. """
 
 # ── Routes ─────────────────────────────────────────────────────────────────────
 @app.get("/health")
@@ -121,4 +122,4 @@ def clear_history(session_id: str):
 
 
 # ── Serve PWA static files ─────────────────────────────────────────────────────
-app.mount("/", StaticFiles(directory="/zoey/pwa", html=True), name="pwa")
+app.mount("/", StaticFiles(directory="/zoeygraystone/pwa", html=True), name="pwa")

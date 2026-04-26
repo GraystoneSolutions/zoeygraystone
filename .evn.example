@@ -1,0 +1,10 @@
+# ── Zoey Environment Variables ────────────────────────────────────────────────
+# Copy this file to .env and fill in your real values.
+# NEVER commit .env to git.
+
+# API Keys
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+MISTRAL_API_KEY=your_mistral_api_key_here
+
+# MongoDB Admin UI password (for mongo-express on port 8081)
+MONGO_EXPRESS_PASSWORD=changeme_before_use

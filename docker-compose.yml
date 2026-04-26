@@ -10,7 +10,7 @@ services:
     env_file: .env
     environment:
       - TZ=America/Chicago
-      - MONGO_URI=mongodb://zoeydb:27017/zoeygraystone
+      - MONGO_URI=mongodb://zoeydb:27017/zoey
     ports:
       - "8000:8000"
     volumes:
