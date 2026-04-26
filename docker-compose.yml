@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
 
   # ── Zoey Core (FastAPI Backend) ──────────────────────────────────────────────
@@ -12,10 +14,10 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./zoeycore:/zoeygraystone/app      # live reload picks up code changes
-      - ./pwa:/zoeygraystone/pwa           # PWA frontend served by FastAPI
-      - ./logs:/zoeygraystone/logs
-      - ./backups:/zoeygraystone/backups
+      - ./zoeycore:/zoey/app      # live reload picks up code changes
+      - ./pwa:/zoey/pwa           # PWA frontend served by FastAPI
+      - ./logs:/zoey/logs
+      - ./backups:/zoey/backups
     depends_on:
       zoeydb:
         condition: service_healthy
