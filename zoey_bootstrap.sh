@@ -113,9 +113,7 @@ if [[ ! -f "$INSTALL_DIR/.env" ]]; then
     warn "│  ACTION REQUIRED — API Keys Not Configured          │"
     warn "│                                                     │"
     warn "│  .env has been created from .env.example            │"
-    warn "│  You MUST add your API keys before continuing:      │"
-    warn "│                                                     │"
-    warn "│    nano ${INSTALL_DIR}/.env"
+    warn "│  You MUST add your API keys before continuing.      │"
     warn "│                                                     │"
     warn "│  Required keys:                                     │"
     warn "│    ANTHROPIC_API_KEY                                │"
@@ -123,16 +121,24 @@ if [[ ! -f "$INSTALL_DIR/.env" ]]; then
     warn "│    MONGO_EXPRESS_PASSWORD                           │"
     warn "└─────────────────────────────────────────────────────┘"
     echo ""
-    read -rp "  Have you completed editing .env with your API keys? [y/N]: " env_confirm
-    [[ "${env_confirm,,}" == "y" ]] || die "Halted. Edit ${INSTALL_DIR}/.env and re-run the script."
-    success ".env confirmed by user"
+    read -rp "  Open .env in nano now to configure your API keys? [Y/n]: " open_confirm
+    if [[ "${open_confirm,,}" != "n" ]]; then
+      nano "$INSTALL_DIR/.env"
+    fi
+    echo ""
+    # Verify the user actually edited the file — check for placeholder values
+    if grep -qE "your_.*_here|changeme" "$INSTALL_DIR/.env"; then
+      warn "Placeholder values detected in .env — your API keys may not be set."
+      read -rp "  Continue anyway? [y/N]: " force_confirm
+      [[ "${force_confirm,,}" == "y" ]] || die "Halted. Edit ${INSTALL_DIR}/.env and re-run the script."
+    fi
+    success ".env configured"
   else
-    die "No .env or .env.example found in ${INSTALL_DIR}. Cannot continue without API keys."
+    die "No .env.example found in ${INSTALL_DIR}. Cannot continue without a template to configure."
   fi
 else
   success ".env already exists — skipping"
 fi
-
 # ── Permissions ───────────────────────────────────────────────────
 chown -R root:docker "$INSTALL_DIR" 2>/dev/null || true
 chmod -R 750 "$INSTALL_DIR"
