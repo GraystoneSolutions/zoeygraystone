@@ -123,6 +123,11 @@ chmod -R 750 "$INSTALL_DIR"
 chmod 600 "$INSTALL_DIR/.env" 2>/dev/null || true
 success "Permissions set"
 
+# ── Docker Build Phase ───────────────────────────────────────────────────
+info "Building Docker images..."
+docker compose -f "$INSTALL_DIR/zoey_docker-compose.yml" build
+success "Docker images built"
+
 # ── Summary ───────────────────────────────────────────────────────
 echo ""
 echo -e "${BOLD}${GREEN}═══════════════════════════════════════════${NC}"

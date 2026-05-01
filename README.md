@@ -4,7 +4,7 @@
 ## Philosophy
 Project Zoey Graystone is an exploratory effort to discover the scope and scalabilty of the current private A.I. landscape without the backing of a major congolomorate and teams of developers. Graystone understands that many other project such as this exist our attempt is not to surpase these projects, but merely to understand this endevor and cultivate our own knowledge in the bleeding edge field of agentic AI as we attempt to all reach the singularity together.
 ## Foundation
-Zoey is written in the python language and developed to operate on a static Linux based VPS. Zoey brings her own dependency stack to the host and installs accordingly. A basic Zoey install will operate using an on premise LLM model (Mystrial) and querey more advanced AIs as needed.
+Zoey is written in the python language and developed to operate on a static Linux based VPS. Zoey brings her own dependency stack to the host and installs accordingly. A basic Zoey install will operate using an on premise LLM model (Mystrial) and querey more advanced AIs (Anthropic) as needed.
 
 ## Evolution
 Future plans include several code modules which can be installed for interfacing with various platforms such as social media networks, or smart home systems, for life-managment and assistance platforms.
@@ -43,15 +43,17 @@ nano .env
 ```
 Fill in your real API keys. **Never commit .env to git.**
 
-### 3. Create required local directories
-```bash
-mkdir -p data/mongo logs backups
-mkdir -p zoeycore/
-```
+### 3. Run Bootstrap file to start the install to /opt/graystone/zoey
+chmod +x zoey_bootstrap.sh
+Before running this file, pass the git branch hash as a value.
+Example:
 
-### 4. Build and start
-```bash
-docker compose up --build -d
+./sh zoey_bootstrap.sh 525114d51f8f4b63fb7aae3d269046008c2e329e
+
+```
+Bootstrap will start the docker build process by the following command:
+docker compose up --build -d zoey_docker-compose.yml
+
 ```
 
 ### 5. Verify everything is running
@@ -59,7 +61,6 @@ docker compose up --build -d
 docker compose ps
 docker compose logs zoeycore --follow
 ```
-
 ---
 
 ## Access Points
@@ -71,7 +72,7 @@ docker compose logs zoeycore --follow
 | API Health    | http://10.242.1.1:8000/health        |
 | MongoDB UI    | http://10.242.1.1:8081               |
 
-*(Replace 10.242.1.1 with your ZeroTier IP)*
+*(Replace 10.242.1.1 with your dedicated server IP)*
 
 ---
 
