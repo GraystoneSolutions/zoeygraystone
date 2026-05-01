@@ -1,0 +1,65 @@
+version: '3.9'
+
+services:
+
+  # ── Zoey Core (FastAPI Backend) ──────────────────────────────────────────────
+  zoeycore:
+    container_name: zoeycore
+    build: ./zoeycore
+    restart: always
+    env_file: .env
+    environment:
+      - TZ=America/Chicago
+      - MONGO_URI=mongodb://zoeydb:27017/zoey
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./zoeycore:/zoey/app      # live reload picks up code changes
+      - ./pwa:/zoey/pwa           # PWA frontend served by FastAPI
+      - ./logs:/zoey/logs
+      - ./backups:/zoey/backups
+    depends_on:
+      zoeydb:
+        condition: service_healthy
+    networks:
+      - zoeynet
+
+  # ── ZoeyDB (MongoDB) ─────────────────────────────────────────────────────────
+  zoeydb:
+    container_name: zoeydb
+    image: mongo:7
+    restart: always
+    environment:
+      - TZ=America/Chicago
+    ports:
+      - "27017:27017"             # expose for local dev tools (Compass, etc.)
+    volumes:
+      - ./data/mongo:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - zoeynet
+
+  # ── Mongo Express (DB Admin UI) ───────────────────────────────────────────────
+  mongo-express:
+    container_name: zoeydb-ui
+    image: mongo-express:latest
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=zoeydb
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD}
+    depends_on:
+      zoeydb:
+        condition: service_healthy
+    networks:
+      - zoeynet
+
+networks:
+  zoeynet:
+    driver: bridge
