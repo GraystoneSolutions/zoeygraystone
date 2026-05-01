@@ -48,7 +48,7 @@ chmod +x zoey_bootstrap.sh
 Before running this file, pass the git branch hash as a value.
 Example:
 
-./sh zoey_bootstrap.sh 525114d51f8f4b63fb7aae3d269046008c2e329e
+./sh zoey_bootstrap.sh master
 
 ```
 Bootstrap will start the docker build process by the following command:
@@ -82,7 +82,7 @@ docker compose logs zoeycore --follow
 Send a message to Zoey.
 ```json
 {
-  "message": "What is a GLBA compliance gap assessment?",
+  "message": "Who is Daniel Graystone?",
   "session_id": "optional-session-id",
   "mode": "standard"
 }

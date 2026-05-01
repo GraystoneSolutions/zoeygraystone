@@ -108,10 +108,26 @@ success "Runtime directories created"
 if [[ ! -f "$INSTALL_DIR/.env" ]]; then
   if [[ -f "$INSTALL_DIR/.env.example" ]]; then
     cp "$INSTALL_DIR/.env.example" "$INSTALL_DIR/.env"
-    warn ".env created from .env.example — YOU MUST EDIT IT before starting Zoey:"
-    warn "  nano ${INSTALL_DIR}/.env"
+    echo ""
+    warn "┌─────────────────────────────────────────────────────┐"
+    warn "│  ACTION REQUIRED — API Keys Not Configured          │"
+    warn "│                                                     │"
+    warn "│  .env has been created from .env.example            │"
+    warn "│  You MUST add your API keys before continuing:      │"
+    warn "│                                                     │"
+    warn "│    nano ${INSTALL_DIR}/.env"
+    warn "│                                                     │"
+    warn "│  Required keys:                                     │"
+    warn "│    ANTHROPIC_API_KEY                                │"
+    warn "│    MISTRAL_API_KEY                                  │"
+    warn "│    MONGO_EXPRESS_PASSWORD                           │"
+    warn "└─────────────────────────────────────────────────────┘"
+    echo ""
+    read -rp "  Have you completed editing .env with your API keys? [y/N]: " env_confirm
+    [[ "${env_confirm,,}" == "y" ]] || die "Halted. Edit ${INSTALL_DIR}/.env and re-run the script."
+    success ".env confirmed by user"
   else
-    warn "No .env or .env.example found. You will need to create ${INSTALL_DIR}/.env manually."
+    die "No .env or .env.example found in ${INSTALL_DIR}. Cannot continue without API keys."
   fi
 else
   success ".env already exists — skipping"
