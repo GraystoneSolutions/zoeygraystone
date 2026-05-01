@@ -76,7 +76,7 @@ success "Checked out commit ${COMMIT}"
 # ── Verify required files exist ───────────────────────────────────
 info "Verifying required files..."
 REQUIRED_FILES=(
-  "docker-compose.yml"
+  "zoey_docker-compose.yml"
   "zoeycore/Dockerfile"
   "zoeycore/main.py"
   "zoeycore/requirements.txt"
