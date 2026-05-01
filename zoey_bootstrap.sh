@@ -143,6 +143,7 @@ fi
 chown -R root:docker "$INSTALL_DIR" 2>/dev/null || true
 chmod -R 750 "$INSTALL_DIR"
 chmod 600 "$INSTALL_DIR/.env" 2>/dev/null || true
+chmod 044 "$INSTALL_DIR/.env.example" 2>/dev/null || true
 success "Permissions set"
 
 # ── Docker Build Phase ───────────────────────────────────────────────────
